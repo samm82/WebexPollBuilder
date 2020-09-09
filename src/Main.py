@@ -39,6 +39,7 @@ def formatAnswers(l):
 
 
 def main():
+    programName = "Webex Poll Builder"
     # make time list
     timeList = ["0:30", "0:45"]
     for i in range(1, 5):
@@ -46,7 +47,7 @@ def main():
     timeList.append("5:00")
 
     # build GUI
-    event, values = sg.Window("Dad Webex").Layout(
+    event, values = sg.Window(programName).Layout(
         [[sg.Text("How long should the question last for?"), sg.Combo(timeList)],
         [sg.Text("Select the file with the question and answers.")],
         [sg.In(), sg.FileBrowse()],
@@ -79,7 +80,7 @@ def main():
                   '<QUESTION TYPE="{0}" TITLE="{1}">\n'.format(q, title)] + answers + ['</QUESTION>\n\n</POLL>']
 
         # Save output file
-        event, values = sg.Window("Dad Webex").Layout(
+        event, values = sg.Window(programName).Layout(
             [[sg.Text("Choose output destination file.")],
             [sg.In(), sg.FileSaveAs(key='save', file_types=(("ATP", "*.atp"), ("Plain Text", "*.txt"),))],
             [sg.CloseButton("OK"), sg.CloseButton("Cancel")]]
