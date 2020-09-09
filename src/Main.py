@@ -36,17 +36,39 @@ def main():
         answers = []
         for i in lines[2:]:
             if i:
-                answers.append(formatString(i))
+                a = i.split(" ", 1)
+                a[1] = formatString(a[1])
+                answers.append(a)
             else:
                 ValueError("Unexpected blank line")
 
         output = ['<?xml version="1.0" encoding="UTF-16"?>\n', \
-                  '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}" NOANSWER="yes" SHOWRESPONSE="yes">\n\n'.format(time), \
-                  '<QUESTION TYPE="mcmany" TITLE="{0}">\n'.format(title)]
+                  '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}" NOANSWER="yes" SHOWRESPONSE="yes">\n\n'.format(time)]
 
-        for i in answers:
-            output.append('<ANSWER ISCORRECT="false">{0}</ANSWER>\n'.format(i))
+        formattedAnswers = []
+        trueCount = 0
+        for a in answers:
+            if a[0].upper() == 'T':
+                correct = "true"
+                trueCount += 1
+            elif a[0].upper() == 'F':
+                correct = "false"
+            else:
+                raise ValueError("Invalid input; expected 'T' or 'F', got", a[0])
 
+            formattedAnswers.append('<ANSWER ISCORRECT="{0}">{1}</ANSWER>\n'.format(correct, a[1]))
+
+        if trueCount == 1:
+            qType = "mcone"
+        elif trueCount > 1:
+            qType = "mcmany"
+        elif trueCount == 0:
+            raise ValueError("There must be at least one correct answer.")
+        else:
+            raise ValueError("Invalid number of correct questions; check that there is at least one.")
+
+        output.append('<QUESTION TYPE="{0}" TITLE="{1}">\n'.format(qType, title))
+        output += formattedAnswers
         output.append('</QUESTION>\n\n</POLL>')
 
         # Save output file
