@@ -3,6 +3,41 @@ import PySimpleGUI as sg
 def formatString(s):
     return s.strip().replace(" ", "&nbsp;")
 
+def formatAnswers(l):
+    answers = []
+    for a in l:
+        if a:
+            a = a.split(" ", 1)
+            a[1] = formatString(a[1])
+            answers.append(a)
+        else:
+            ValueError("Unexpected blank line")
+
+    formattedAnswers = []
+    trueCount = 0
+    for a in answers:
+        if a[0].upper() == 'T':
+            correct = "true"
+            trueCount += 1
+        elif a[0].upper() == 'F':
+            correct = "false"
+        else:
+            raise ValueError("Invalid input; expected 'T' or 'F', got", a[0])
+
+        formattedAnswers.append('<ANSWER ISCORRECT="{0}">{1}</ANSWER>\n'.format(correct, a[1]))
+
+    if trueCount == 1:
+        qType = "mcone"
+    elif trueCount > 1:
+        qType = "mcmany"
+    elif trueCount == 0:
+        raise ValueError("There must be at least one correct answer.")
+    else:
+        raise ValueError("Invalid number of correct questions; check that there is at least one.")
+
+    return formattedAnswers, qType
+
+
 def main():
     # make time list
     timeList = ["0:30", "0:45"]
@@ -31,45 +66,17 @@ def main():
             raise ValueError("Expected title in file.")
         else:
             title = formatString(lines[0])
-        if lines[1] != "\n":
-            raise ValueError("Expected blank second line in file.")
-        answers = []
-        for i in lines[2:]:
-            if i:
-                a = i.split(" ", 1)
-                a[1] = formatString(a[1])
-                answers.append(a)
-            else:
-                ValueError("Unexpected blank line")
+
+        if len(lines) != 1:
+            if lines[1] != "\n":
+                raise ValueError("Expected blank second line in file.")
+            answers, q = formatAnswers(lines[2:])
+        else:
+            answers, q = [], "text"
 
         output = ['<?xml version="1.0" encoding="UTF-16"?>\n', \
-                  '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}" NOANSWER="yes" SHOWRESPONSE="yes">\n\n'.format(time)]
-
-        formattedAnswers = []
-        trueCount = 0
-        for a in answers:
-            if a[0].upper() == 'T':
-                correct = "true"
-                trueCount += 1
-            elif a[0].upper() == 'F':
-                correct = "false"
-            else:
-                raise ValueError("Invalid input; expected 'T' or 'F', got", a[0])
-
-            formattedAnswers.append('<ANSWER ISCORRECT="{0}">{1}</ANSWER>\n'.format(correct, a[1]))
-
-        if trueCount == 1:
-            qType = "mcone"
-        elif trueCount > 1:
-            qType = "mcmany"
-        elif trueCount == 0:
-            raise ValueError("There must be at least one correct answer.")
-        else:
-            raise ValueError("Invalid number of correct questions; check that there is at least one.")
-
-        output.append('<QUESTION TYPE="{0}" TITLE="{1}">\n'.format(qType, title))
-        output += formattedAnswers
-        output.append('</QUESTION>\n\n</POLL>')
+                  '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}" NOANSWER="yes" SHOWRESPONSE="yes">\n\n'.format(time), \
+                  '<QUESTION TYPE="{0}" TITLE="{1}">\n'.format(q, title)] + answers + ['</QUESTION>\n\n</POLL>']
 
         # Save output file
         event, values = sg.Window("Dad Webex").Layout(
