@@ -42,20 +42,22 @@ def formatAnswers(l):
     else:
         raise ValueError("Invalid number of correct questions; check that there is at least one.")
 
-    return answers, qType, i
+    return answers, qType, i + 3
 
-def getQuestion(l):
+def processQuestion(l, t):
     if not l[0]:
         raise ValueError("Expected title in file.")
     else:
         if len(l) == 1 or l[2][0:2].upper() not in ["T ", "F "]:
-            return [formatString(l[0])], "text", 2
+            a, qType, i = [], "text", 2
         else:
             if l[1] != "\n":
                 raise ValueError("Expected blank line; check that the input file is formatted correctly.")
+            a, qType, i = formatAnswers(l[2:])
 
-            answers, qType, i = formatAnswers(l[2:])
-            return [formatString(l[0])] + answers, qType, i + 3
+    return ['<?xml version="1.0" encoding="UTF-16"?>\n', \
+            '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}" NOANSWER="yes" SHOWRESPONSE="yes">\n\n'.format(t), \
+            '<QUESTION TYPE="{0}" TITLE="{1}">\n'.format(qType, formatString(l[0]))] + a + ['</QUESTION>\n\n</POLL>'], i
 
 def main():
     # GUI
@@ -83,12 +85,7 @@ def main():
             lines = f.readlines()
 
         while lines:
-            question, qType, startLine = getQuestion(lines)
-
-            output = ['<?xml version="1.0" encoding="UTF-16"?>\n', \
-                      '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}" NOANSWER="yes" SHOWRESPONSE="yes">\n\n'.format(time), \
-                      '<QUESTION TYPE="{0}" TITLE="{1}">\n'.format(qType, question[0])] + question[1:] + ['</QUESTION>\n\n</POLL>']
-
+            output, startLine = processQuestion(lines, time)
             outFilepath = join(outDir, filename)
 
             i = 1
