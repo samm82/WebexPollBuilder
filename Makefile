@@ -1,4 +1,4 @@
-MAIN_FILE = "src/Main.pyw"
+MAIN_FILE = "src/Webex Poll Builder.pyw"
 
 .PHONY: $(MAIN_FILE)
 
