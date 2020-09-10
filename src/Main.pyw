@@ -1,3 +1,4 @@
+import codecs
 from datetime import datetime
 from os.path import isfile, join
 
@@ -74,9 +75,8 @@ def main():
     elif event == "OK":
         time, filepath = values[0], values[1]
 
-        f = open(filepath, "r")
-        lines = f.readlines()
-        f.close()
+        with open(filepath, encoding='utf-8') as f:
+            lines = f.readlines()
 
         while lines:
             question, qType, startLine = getQuestion(lines)
