@@ -54,7 +54,7 @@ def main():
         [[sg.Text("How long should the question last for?"), sg.Combo(timeList)],
         [sg.Text("Select the file with the question and answers.")],
         [sg.In(), sg.FileBrowse()],
-        [sg.Text("Select the directory to save output fileto.")],
+        [sg.Text("Select the directory to save output file to.")],
         [sg.In(), sg.FolderBrowse()],
         [sg.Text("Enter filename. (Default is date)")],
         [sg.In()],

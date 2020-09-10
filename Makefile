@@ -1,4 +1,4 @@
-MAIN_FILE = "src/Main.py"
+MAIN_FILE = "src/Main.pyw"
 
 .PHONY: $(MAIN_FILE)
 
