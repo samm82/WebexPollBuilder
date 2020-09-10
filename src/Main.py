@@ -54,8 +54,10 @@ def main():
         [[sg.Text("How long should the question last for?"), sg.Combo(timeList)],
         [sg.Text("Select the file with the question and answers.")],
         [sg.In(), sg.FileBrowse()],
-        [sg.Text("Choose directory to save output file(s).")],
+        [sg.Text("Select the directory to save output fileto.")],
         [sg.In(), sg.FolderBrowse()],
+        [sg.Text("Enter filename. (Default is date)")],
+        [sg.In()],
         [sg.CloseButton("OK"), sg.CloseButton("Cancel")]]
         ).Read()
 
@@ -84,7 +86,10 @@ def main():
                   '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}" NOANSWER="yes" SHOWRESPONSE="yes">\n\n'.format(time), \
                   '<QUESTION TYPE="{0}" TITLE="{1}">\n'.format(q, title)] + answers + ['</QUESTION>\n\n</POLL>']
 
-        outFilepath = join(values[2], datetime.now().strftime("%m%d%Y"))
+        if values[3]:
+            outFilepath = join(values[2], values[3])
+        else:
+            outFilepath = join(values[2], datetime.now().strftime("%m%d%Y"))
 
         saved, i = 0, 1
         while saved < 1:
