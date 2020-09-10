@@ -1,5 +1,6 @@
 from os.path import isfile
 
+
 def saveToFile(path, data):
     i = 1
     while True:
