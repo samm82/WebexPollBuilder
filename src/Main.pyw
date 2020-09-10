@@ -85,7 +85,7 @@ def gui():
             [sg.CloseButton("OK"), sg.CloseButton("Cancel")]]
             ).Read()
 
-        if event == "Cancel" or event == sg.WIN_CLOSED:
+        if event in ["Cancel", sg.WIN_CLOSED]:
             exit()
         elif event == "OK":
             if values[0] in timeList:
