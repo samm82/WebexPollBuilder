@@ -1,28 +1,31 @@
-import codecs
 from datetime import datetime
 
 import PySimpleGUI as sg
 
+
 def genTimeList():
     t = ["0:30", "0:45"]
+    mins = ["00", "15", "30", "45"]
     for i in range(1, 5):
-        t = t + list(map(lambda x : ":".join([str(i), x]), ["00", "15", "30", "45"]))
+        t = t + list(map(lambda x: ":".join([str(i), x]), mins))
     t.append("5:00")
     return t
+
 
 def gui():
     timeList = genTimeList()
     while True:
         event, values = sg.Window("Webex Poll Builder").Layout(
-            [[sg.Text("How long should the question last for?"), sg.Combo(timeList)],
-            [sg.Text("Select the file with the question and answers.")],
-            [sg.In(), sg.FileBrowse()],
-            [sg.Text("Select the directory to save output file to.")],
-            [sg.In(), sg.FolderBrowse()],
-            [sg.Text("Enter filename. (Default is date)")],
-            [sg.In()],
-            [sg.CloseButton("OK"), sg.CloseButton("Cancel")]]
-            ).Read()
+            [[sg.Text("How long should the question last for?"),
+              sg.Combo(timeList)],
+             [sg.Text("Select the file with the question and answers.")],
+             [sg.In(), sg.FileBrowse()],
+             [sg.Text("Select the directory to save output file to.")],
+             [sg.In(), sg.FolderBrowse()],
+             [sg.Text("Enter filename. (Default is date)")],
+             [sg.In()],
+             [sg.CloseButton("OK"), sg.CloseButton("Cancel")]]
+        ).Read()
 
         if event in ["Cancel", sg.WIN_CLOSED]:
             exit()
@@ -33,12 +36,15 @@ def gui():
                 # can't use tuple unpacking or the like; type(values) == dict
                 return values[0], values[1], values[2], values[3]
             else:
-                event, values = sg.popup("Invalid time: {0}.".format(values[0]), \
-                    "Please select a time from the drop-down menu.")
+                event, values = sg.popup(
+                    "Invalid time: {0}.".format(values[0]),
+                    "Please select a time from the drop-down menu."
+                )
                 if event == sg.WIN_CLOSED:
                     exit()
         else:
             raise ValueError("Invalid event value.")
+
 
 def readData(path):
     with open(path, encoding='utf-8') as f:
