@@ -59,6 +59,18 @@ def processQuestion(l, t):
             '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}" NOANSWER="yes" SHOWRESPONSE="yes">\n\n'.format(t), \
             '<QUESTION TYPE="{0}" TITLE="{1}">\n'.format(qType, formatString(l[0]))] + a + ['</QUESTION>\n\n</POLL>'], i
 
+def saveToFile(path, data):
+    i = 1
+    while True:
+        file = path + "{0}.atp".format(i)
+        if isfile(file):
+            i += 1
+        else:
+            f = open(file, "w")
+            f.writelines(data)
+            f.close()
+            return
+
 def main():
     # GUI
     event, values = sg.Window("Webex Poll Builder").Layout(
@@ -75,30 +87,19 @@ def main():
     if event == "Cancel":
         exit()
     elif event == "OK":
-        time, filepath, outDir = values[0], values[1], values[2]
+        time, inFilePath, outDir = values[0], values[1], values[2]
         if values[3]:
             filename = values[3]
         else:
             filename = datetime.now().strftime("%m%d%Y")
 
-        with open(filepath, encoding='utf-8') as f:
+        with open(inFilePath, encoding='utf-8') as f:
             lines = f.readlines()
 
         while lines:
             output, startLine = processQuestion(lines, time)
-            outFilepath = join(outDir, filename)
-
-            i = 1
-            while True:
-                out = outFilepath + "-" + str(i) + ".atp"
-                if isfile(out):
-                    i += 1
-                else:
-                    f = open(out, "w")
-                    f.writelines(output)
-                    f.close()
-                    break
-
+            outFilePath = join(outDir, filename) + "-"
+            saveToFile(outFilePath, output)
             lines = lines[startLine:]
 
     else:
