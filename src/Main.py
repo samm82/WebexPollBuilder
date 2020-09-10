@@ -1,3 +1,6 @@
+from datetime import datetime
+from os.path import isfile, join
+
 import PySimpleGUI as sg
 
 def formatString(s):
@@ -51,6 +54,8 @@ def main():
         [[sg.Text("How long should the question last for?"), sg.Combo(timeList)],
         [sg.Text("Select the file with the question and answers.")],
         [sg.In(), sg.FileBrowse()],
+        [sg.Text("Choose directory to save output file(s).")],
+        [sg.In(), sg.FolderBrowse()],
         [sg.CloseButton("OK"), sg.CloseButton("Cancel")]]
         ).Read()
 
@@ -79,28 +84,18 @@ def main():
                   '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}" NOANSWER="yes" SHOWRESPONSE="yes">\n\n'.format(time), \
                   '<QUESTION TYPE="{0}" TITLE="{1}">\n'.format(q, title)] + answers + ['</QUESTION>\n\n</POLL>']
 
-        # Save output file
-        event, values = sg.Window(programName).Layout(
-            [[sg.Text("Choose output destination file.")],
-            [sg.In(), sg.FileSaveAs(key='save', file_types=(("ATP", "*.atp"), ("Plain Text", "*.txt"),))],
-            [sg.CloseButton("OK"), sg.CloseButton("Cancel")]]
-            ).Read()
+        outFilepath = join(values[2], datetime.now().strftime("%m%d%Y"))
 
-        if event == "Cancel":
-            exit()
-        elif event == "OK":
-            save = values['save']
-
-            # add file extension if not already
-            if not save.endswith(".txt") and not save.endswith(".atp"):
-                save = save + ".atp"
-
-            f = open(save, "w")
-            f.writelines(output)
-            f.close()
-
-        else:
-            raise ValueError("Invalid event value.")
+        saved, i = 0, 1
+        while saved < 1:
+            out = outFilepath + "-" + str(i) + ".atp"
+            if isfile(out):
+                i += 1
+            else:
+                f = open(out, "w")
+                f.writelines(output)
+                f.close()
+                saved += 1
 
     else:
         raise ValueError("Invalid event value.")
