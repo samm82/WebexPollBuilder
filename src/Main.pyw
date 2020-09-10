@@ -73,7 +73,11 @@ def main():
     if event == "Cancel":
         exit()
     elif event == "OK":
-        time, filepath = values[0], values[1]
+        time, filepath, outDir = values[0], values[1], values[2]
+        if values[3]:
+            filename = values[3]
+        else:
+            filename = datetime.now().strftime("%m%d%Y")
 
         with open(filepath, encoding='utf-8') as f:
             lines = f.readlines()
@@ -85,10 +89,7 @@ def main():
                       '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}" NOANSWER="yes" SHOWRESPONSE="yes">\n\n'.format(time), \
                       '<QUESTION TYPE="{0}" TITLE="{1}">\n'.format(qType, question[0])] + question[1:] + ['</QUESTION>\n\n</POLL>']
 
-            if values[3]:
-                outFilepath = join(values[2], values[3])
-            else:
-                outFilepath = join(values[2], datetime.now().strftime("%m%d%Y"))
+            outFilepath = join(outDir, filename)
 
             i = 1
             while True:
