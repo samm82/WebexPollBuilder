@@ -1,4 +1,6 @@
 from datetime import datetime
+from sys import exit
+from os.path import isdir, isfile, splitext
 
 import PySimpleGUI as sg
 
@@ -28,23 +30,55 @@ def gui():
              [sg.CloseButton("OK"), sg.CloseButton("Cancel")]]
         ).Read()
 
-        if event in ["Cancel", sg.WIN_CLOSED]:
-            exit()
-        elif event == "OK":
-            if values[0] in timeList:
+        if event == "OK":
+            if not values[0]:
+                sg.popup(
+                    "Please select a time from the drop-down menu.",
+                    title="Time Not Selected"
+                )
+
+            elif values[0] not in timeList:
+                sg.popup(
+                    "Invalid time: " + str(values[0]),
+                    "Please select a time from the drop-down menu.",
+                    title="Invalid Time"
+                )
+
+            elif not values[1]:
+                sg.popup(
+                    "Please select a valid input (.txt) file.",
+                    title="Input File Not Selected"
+                )
+
+            elif not isfile(values[1]) or splitext(values[1])[1] != ".txt":
+                sg.popup(
+                    "Invalid input file: {0}.".format(values[1]),
+                    "Please select a valid input (.txt) file.",
+                    title="Invalid Input File"
+                )
+
+            elif not values[2]:
+                sg.popup(
+                    "Please select a valid output directory.",
+                    title="Output Directory Not Selected"
+                )
+
+            elif not isdir(values[2]):
+                sg.popup(
+                    "Invalid Output Directory: {0}.".format(values[2]),
+                    "Please select a valid output directory.",
+                    title="Invalid Output Directory"
+                )
+
+            else:
+
                 if not values[3]:
                     values[3] = datetime.now().strftime("%m%d%Y")
                 # can't use tuple unpacking or the like; type(values) == dict
                 return values[0], values[1], values[2], values[3]
-            else:
-                event, values = sg.popup(
-                    "Invalid time: {0}.".format(values[0]),
-                    "Please select a time from the drop-down menu."
-                )
-                if event == sg.WIN_CLOSED:
-                    exit()
+
         else:
-            raise ValueError("Invalid event value.")
+            exit()
 
 
 # Also removes trailing whitespace; is this the best place to do it?
