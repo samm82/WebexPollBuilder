@@ -6,9 +6,10 @@ import PySimpleGUI as sg
 def genTimeList():
     t = ["0:30", "0:45"]
     mins = ["00", "15", "30", "45"]
-    for i in range(1, 5):
+    TIME_MAX = 5
+    for i in range(1, TIME_MAX):
         t = t + list(map(lambda x: ":".join([str(i), x]), mins))
-    t.append("5:00")
+    t.append(str(TIME_MAX) + ":00")
     return t
 
 
