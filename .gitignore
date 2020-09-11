@@ -7,6 +7,10 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+test/output/
+!test/output/fileExists-2.atp
+!test/output/fileExists-3.atp
+!test/output/fileExists-5.atp
 .Python
 build/
 develop-eggs/
