@@ -1,6 +1,8 @@
 MAIN_FILE = "src/Webex Poll Builder.pyw"
+TEST_PATH = ./test
+SRC_PATH  = ./src
 
-.PHONY: $(MAIN_FILE)
+.PHONY: $(MAIN_FILE) test
 
 compile: $(MAIN_FILE)
 	pyinstaller --onefile $^
@@ -9,4 +11,7 @@ run: $(MAIN_FILE)
 	py $^
 
 lint:
-	flake8 --ignore=N802,N806,N813,W504 --exclude=$(TEST_PATH)/* .
+	flake8 --ignore=E402,N802,N806,N813,N815,W504 .
+
+test:
+	pytest --cov-report term --cov=$(SRC_PATH) $(TEST_PATH)

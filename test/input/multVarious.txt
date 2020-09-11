@@ -1,0 +1,18 @@
+Which of the following are Avengers?
+
+T Iron Man
+F Superman
+F Wolverine
+T Spiderman
+T Doctor Strange
+
+Write an essay.
+
+Did you like writing the essay?
+
+T Yes
+F No
+
+Why or why not?
+
+Should we include essays in the future?

@@ -1,0 +1,6 @@
+Will this code work?
+
+T Yes
+F No
+T Hopefully
+F Who knows?
