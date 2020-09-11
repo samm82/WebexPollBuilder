@@ -2,7 +2,7 @@ from datetime import datetime
 from sys import exit
 from os.path import isdir, isfile, splitext
 
-import PySimpleGUI as sg
+from InputGUI import *
 
 
 def genTimeList():
@@ -18,65 +18,25 @@ def genTimeList():
 def gui():
     timeList = genTimeList()
     while True:
-        event, values = sg.Window("Webex Poll Builder").Layout(
-            [[sg.Text("How long should the question last for?"),
-              sg.Combo(timeList)],
-             [sg.Text("Select the file with the question and answers.")],
-             [sg.In(), sg.FileBrowse()],
-             [sg.Text("Select the directory to save output file to.")],
-             [sg.In(), sg.FolderBrowse()],
-             [sg.Text("Enter filename. (Default is date)")],
-             [sg.In()],
-             [sg.CloseButton("OK"), sg.CloseButton("Cancel")]]
-        ).Read()
-
+        event, values = webexPollBuilderGUI(timeList)
         if event == "OK":
             if not values[0]:
-                sg.popup(
-                    "Please select a time from the drop-down menu.",
-                    title="Time Not Selected"
-                )
-
+                timeNotSelected()
             elif values[0] not in timeList:
-                sg.popup(
-                    "Invalid time: " + str(values[0]),
-                    "Please select a time from the drop-down menu.",
-                    title="Invalid Time"
-                )
-
+                invalidTime(values[0])
             elif not values[1]:
-                sg.popup(
-                    "Please select a valid input (.txt) file.",
-                    title="Input File Not Selected"
-                )
-
+                inFileNotSelected()
             elif not isfile(values[1]) or splitext(values[1])[1] != ".txt":
-                sg.popup(
-                    "Invalid input file: {0}.".format(values[1]),
-                    "Please select a valid input (.txt) file.",
-                    title="Invalid Input File"
-                )
-
+                invalidInFile(values[1])
             elif not values[2]:
-                sg.popup(
-                    "Please select a valid output directory.",
-                    title="Output Directory Not Selected"
-                )
-
+                outDirNotSelected()
             elif not isdir(values[2]):
-                sg.popup(
-                    "Invalid Output Directory: {0}.".format(values[2]),
-                    "Please select a valid output directory.",
-                    title="Invalid Output Directory"
-                )
-
+                invalidOutDir(values[2])
             else:
-
                 if not values[3]:
                     values[3] = datetime.now().strftime("%m%d%Y")
                 # can't use tuple unpacking or the like; type(values) == dict
                 return values[0], values[1], values[2], values[3]
-
         else:
             exit()
 
