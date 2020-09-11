@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<POLL TYPE="named" SHOWTIMER="yes" ALARM="1:45" NOANSWER="yes" SHOWRESPONSE="yes">
+
+<QUESTION TYPE="mcmany" TITLE="Which&nbsp;of&nbsp;the&nbsp;following&nbsp;are&nbsp;Avengers?">
+<ANSWER ISCORRECT="true">Iron&nbsp;Man</ANSWER>
+<ANSWER ISCORRECT="false">Superman</ANSWER>
+<ANSWER ISCORRECT="false">Wolverine</ANSWER>
+<ANSWER ISCORRECT="true">Spiderman</ANSWER>
+<ANSWER ISCORRECT="true">Doctor&nbsp;Strange</ANSWER>
+</QUESTION>
+
+</POLL>

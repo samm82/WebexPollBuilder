@@ -4,9 +4,9 @@ def formatString(s):
 
 def formatAnswers(l):
     answers, trueCount = [], 0
-    for i in range(len(l)):
-        if l[i] and l[i] != "\n":
-            a = l[i].split(" ", 1)
+    for line in l:
+        if line and line != "\n":
+            a = line.split(" ", 1)
 
             if a[0].upper() == 'T':
                 correct = "true"
@@ -31,10 +31,11 @@ def formatAnswers(l):
         correctAns = "There must be at least one correct answer."
         raise ValueError(correctAns)
     else:
-        raise ValueError("Invalid number of correct questions;" +
+        # Redundancy; shouldn't be executed
+        raise ValueError("Invalid number of correct answers;" +
                          " check that there is at least one.")
 
-    return answers, qType, i + 3
+    return answers, qType, len(answers) + 3
 
 
 def processQuestion(l, t):
@@ -51,7 +52,7 @@ def processQuestion(l, t):
 
     return ['<?xml version="1.0" encoding="UTF-16"?>\n',
             '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}"'.format(t) +
-            ' NOANSWER="yes" SHOWRESPONSE="yes">\n\n',
+            ' NOANSWER="yes" SHOWRESPONSE="yes">\n', '\n',
             '<QUESTION TYPE="{0}"'.format(qType) +
             ' TITLE="{0}">\n'.format(formatString(l[0]))
-            ] + a + ['</QUESTION>\n\n</POLL>'], i
+            ] + a + ['</QUESTION>\n', '\n', '</POLL>'], i

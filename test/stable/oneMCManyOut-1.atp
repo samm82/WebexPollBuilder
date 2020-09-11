@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<POLL TYPE="named" SHOWTIMER="yes" ALARM="1:45" NOANSWER="yes" SHOWRESPONSE="yes">
+
+<QUESTION TYPE="mcmany" TITLE="Will&nbsp;this&nbsp;code&nbsp;work?">
+<ANSWER ISCORRECT="true">Yes</ANSWER>
+<ANSWER ISCORRECT="false">No</ANSWER>
+<ANSWER ISCORRECT="true">Hopefully</ANSWER>
+<ANSWER ISCORRECT="false">Who&nbsp;knows?</ANSWER>
+</QUESTION>
+
+</POLL>

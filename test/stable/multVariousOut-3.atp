@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<POLL TYPE="named" SHOWTIMER="yes" ALARM="1:45" NOANSWER="yes" SHOWRESPONSE="yes">
+
+<QUESTION TYPE="mcone" TITLE="Did&nbsp;you&nbsp;like&nbsp;writing&nbsp;the&nbsp;essay?">
+<ANSWER ISCORRECT="true">Yes</ANSWER>
+<ANSWER ISCORRECT="false">No</ANSWER>
+</QUESTION>
+
+</POLL>

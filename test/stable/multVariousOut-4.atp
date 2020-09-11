@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<POLL TYPE="named" SHOWTIMER="yes" ALARM="1:45" NOANSWER="yes" SHOWRESPONSE="yes">
+
+<QUESTION TYPE="text" TITLE="Why&nbsp;or&nbsp;why&nbsp;not?">
+</QUESTION>
+
+</POLL>
