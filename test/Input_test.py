@@ -31,6 +31,11 @@ class TestReadData:
         assert data == ["Will this code work?\n", "\n", "T Yes\n",
                         "F No\n", "T Hopefully\n", "F Who knows?"]
 
+    def test_trailing_newlines(self):
+        data = readData(path.join(self.inputDir, "trailingNewlines.txt"))
+        assert data == ["This question has trailing whitespace.\n", "\n",
+                        "F No, it doesn't\n", "T Yes, it does\n"]
+
     def test_multiple_various(self):
         data = readData(path.join(self.inputDir, "multVarious.txt"))
         assert data == ["Which of the following are Avengers?\n", "\n",
@@ -39,4 +44,4 @@ class TestReadData:
                         "Write an essay.\n", "\n",
                         "Did you like writing the essay?\n", "\n", "T Yes\n",
                         "F No\n", "\n", "Why or why not?\n", "\n",
-                        "Should we include essays in the future?"]
+                        "Should we include essays in the future?\n"]

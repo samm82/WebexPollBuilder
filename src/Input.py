@@ -48,8 +48,10 @@ def gui():
             raise ValueError("Invalid event value.")
 
 
+# Also removes trailing whitespace; is this the best place to do it?
 def readData(path):
     with open(path, encoding='utf-8') as f:
-        # as to not return with a file left open
         data = f.readlines()
+    while data[-1] == "\n":
+        del data[-1]
     return data

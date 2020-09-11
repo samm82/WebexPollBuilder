@@ -1,0 +1,8 @@
+This question has trailing whitespace.
+
+F No, it doesn't
+T Yes, it does
+
+
+
+

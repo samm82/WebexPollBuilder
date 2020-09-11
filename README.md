@@ -4,7 +4,6 @@ A program to build polls to save and use with Webex from text files.
 ## Input File Format
 - Each question should be on a separate line, with a blank line after the title.
 - Each answer should be on a separate line, with either a "T" or an "F" at the start of the line (to denote if the question is a correct answer or not), followed by a space.
-- There should be no trailing newlines at the end of the file.
 - Questions not followed by answers will be processed as short answer questions.
 
 ### Example
@@ -29,4 +28,5 @@ F No
 Why or why not?
 
 Should we include essays in the future?
+
 ```
