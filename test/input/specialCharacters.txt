@@ -1,0 +1,4 @@
+This question has “special characters;” can this program still process it?
+
+T Yes! 👍
+F No! 👎

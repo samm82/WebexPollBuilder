@@ -36,6 +36,12 @@ class TestReadData:
         assert data == ["This question has trailing whitespace.\n", "\n",
                         "F No, it does not\n", "T Yes, it does\n"]
 
+    def test_special_characters(self):
+        data = readData(path.join(self.inputDir, "specialCharacters.txt"))
+        assert data == ['This question has “special characters;”' +
+                        ' can this program still process it?\n', '\n',
+                        'T Yes! 👍\n', 'F No! 👎']
+
     def test_multiple_various(self):
         data = readData(path.join(self.inputDir, "multVarious.txt"))
         assert data == ["Which of the following are Avengers?\n", "\n",
