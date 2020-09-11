@@ -12,9 +12,17 @@ class TestFormatString:
         assert formatString("  test \t\n") == "test"
         assert not formatString("\n \n \t   ")
 
-    # def test_replace_space(self):
+    def test_replace_chars(self):
+        assert formatString("&") == "&amp;"
+        assert formatString("<") == "&lt;"
+        assert formatString(">") == "&gt;"
+        assert formatString("\"") == "&quot;"
+        assert formatString("'") == "&apos;"
+        assert formatString("a z") == "a&nbsp;z"
 
-    # def test_full_functionality(self):
+    def test_full_functionality(self):
+        assert formatString(" \n \t &<te'st \"123\">\n ") \
+            == "&amp;&lt;te&apos;st&nbsp;&quot;123&quot;&gt;"
 
 
 class TestFormatAnswers:
@@ -65,7 +73,7 @@ class TestProcessQuestion:
     stableDir = path.join(curdir, "test", "stable")
 
     def test_one_short_answer(self):
-        q = ["Tell me something I don't know."]
+        q = ["Tell me something I do not know."]
         with open(path.join(self.stableDir, "oneTextOut-1.atp")) as f:
             stableOut = f.readlines()
 
@@ -96,7 +104,7 @@ class TestProcessQuestion:
         assert i == 7
 
     def test_short_answer_with_trailing(self):
-        q = ["Tell me something I don't know.\n", "\n", "Was that fun?"]
+        q = ["Tell me something I do not know.\n", "\n", "Was that fun?"]
         with open(path.join(self.stableDir, "oneTextOut-1.atp")) as f:
             stableOut = f.readlines()
 

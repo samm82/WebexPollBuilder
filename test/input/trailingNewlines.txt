@@ -1,6 +1,6 @@
 This question has trailing whitespace.
 
-F No, it doesn't
+F No, it does not
 T Yes, it does
 
 

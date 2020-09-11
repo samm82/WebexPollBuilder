@@ -34,7 +34,7 @@ class TestReadData:
     def test_trailing_newlines(self):
         data = readData(path.join(self.inputDir, "trailingNewlines.txt"))
         assert data == ["This question has trailing whitespace.\n", "\n",
-                        "F No, it doesn't\n", "T Yes, it does\n"]
+                        "F No, it does not\n", "T Yes, it does\n"]
 
     def test_multiple_various(self):
         data = readData(path.join(self.inputDir, "multVarious.txt"))
