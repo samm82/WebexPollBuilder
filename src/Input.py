@@ -1,4 +1,5 @@
 from datetime import datetime
+from os.path import join
 
 import PySimpleGUI as sg
 
@@ -35,7 +36,7 @@ def gui():
                 if not values[3]:
                     values[3] = datetime.now().strftime("%m%d%Y")
                 # can't use tuple unpacking or the like; type(values) == dict
-                return values[0], values[1], values[2], values[3]
+                return values[0], values[1], join(values[2], values[3]) + "-"
             else:
                 event, values = sg.popup(
                     "Invalid time: {0}.".format(values[0]),

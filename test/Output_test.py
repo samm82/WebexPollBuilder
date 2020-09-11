@@ -43,14 +43,9 @@ class TestSaveToFile:
         data = ["\n"]
         pathPreface = path.join(self.outDir, "fileExists-")
 
-        saveToFile(pathPreface, data)
-        saveToFile(pathPreface, data)
-        saveToFile(pathPreface, data)
+        for i in [1, 4, 6]:
+            saveToFile(pathPreface, data)
+            assert path.isfile(pathPreface + str(i) + ".atp")
 
-        assert path.isfile(pathPreface + "1.atp")
-        assert path.isfile(pathPreface + "4.atp")
-        assert path.isfile(pathPreface + "6.atp")
-
-        remove(pathPreface + "1.atp")
-        remove(pathPreface + "4.atp")
-        remove(pathPreface + "6.atp")
+        for i in [1, 4, 6]:
+            remove(pathPreface + str(i) + ".atp")
