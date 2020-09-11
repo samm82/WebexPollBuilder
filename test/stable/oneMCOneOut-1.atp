@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<POLL TYPE="named" SHOWTIMER="yes" ALARM="0:45" NOANSWER="yes" SHOWRESPONSE="yes">
+
+<QUESTION TYPE="mcone" TITLE="Can&nbsp;you&nbsp;answer&nbsp;this&nbsp;question?">
+<ANSWER ISCORRECT="true">Yes</ANSWER>
+<ANSWER ISCORRECT="false">No</ANSWER>
+</QUESTION>
+
+</POLL>

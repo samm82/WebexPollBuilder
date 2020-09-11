@@ -17,6 +17,15 @@ class TestGenTimeList:
 class TestReadData:
     inputDir = path.join(curdir, "test", "input")
 
+    def test_one_short_answer(self):
+        data = readData(path.join(self.inputDir, "oneText.txt"))
+        assert data == ["How have you been?"]
+
+    def test_one_mcone(self):
+        data = readData(path.join(self.inputDir, "oneMCOne.txt"))
+        assert data == ["Pick the first option.\n", "\n",
+                        "T This one\n", "F Not this one"]
+
     def test_one_mcmany(self):
         data = readData(path.join(self.inputDir, "oneMCMany.txt"))
         assert data == ["Will this code work?\n", "\n", "T Yes\n",

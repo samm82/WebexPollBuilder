@@ -64,9 +64,27 @@ class TestFormatAnswers:
 class TestProcessQuestion:
     stableDir = path.join(curdir, "test", "stable")
 
-    # def test_just_mcone(self):
+    def test_one_short_answer(self):
+        q = ["Tell me something I don't know."]
+        with open(path.join(self.stableDir, "oneTextOut-1.atp")) as f:
+            stableOut = f.readlines()
 
-    def test_just_mcany(self):
+        out, i = processQuestion(q, "5:00")
+
+        assert out == stableOut
+        assert i == 2
+
+    def test_one_mcone(self):
+        q = ["Can you answer this question?\n", "\n", "T Yes\n", "F No\n"]
+        with open(path.join(self.stableDir, "oneMCOneOut-1.atp")) as f:
+            stableOut = f.readlines()
+
+        out, i = processQuestion(q, "0:45")
+
+        assert out == stableOut
+        assert i == 5
+
+    def test_one_mcany(self):
         q = ["Will this code work?\n", "\n", "T Yes\n", "F No\n",
              "T Hopefully\n", "F Who knows?"]
         with open(path.join(self.stableDir, "oneMCManyOut-1.atp")) as f:
@@ -77,6 +95,12 @@ class TestProcessQuestion:
         assert out == stableOut
         assert i == 7
 
-    # def test_just_short_answer(self):
+    def test_short_answer_with_trailing(self):
+        q = ["Tell me something I don't know.\n", "\n", "Was that fun?"]
+        with open(path.join(self.stableDir, "oneTextOut-1.atp")) as f:
+            stableOut = f.readlines()
 
-    # def test_short_answer_with_trailing(self):
+        out, i = processQuestion(q, "5:00")
+
+        assert out == stableOut
+        assert i == 2

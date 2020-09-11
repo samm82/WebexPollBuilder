@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<POLL TYPE="named" SHOWTIMER="yes" ALARM="5:00" NOANSWER="yes" SHOWRESPONSE="yes">
+
+<QUESTION TYPE="text" TITLE="Tell&nbsp;me&nbsp;something&nbsp;I&nbsp;don't&nbsp;know.">
+</QUESTION>
+
+</POLL>
