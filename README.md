@@ -8,7 +8,9 @@ A program to build polls to save and use with Webex from text files.
 - Questions not followed by answers will be processed as short answer questions.
 
 ### Example
-```
+```txt
+// test/input/multVarious.txt
+
 Which of the following are Avengers?
 
 T Iron Man

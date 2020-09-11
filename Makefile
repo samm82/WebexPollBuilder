@@ -6,6 +6,7 @@ SRC_PATH  = ./src
 
 compile: $(MAIN_FILE)
 	pyinstaller --onefile $^
+	npx embedme README.md
 
 run: $(MAIN_FILE)
 	py $^
