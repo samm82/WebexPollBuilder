@@ -1,0 +1,8 @@
+Is this a good question?
+
+T No
+F Yes
+I forgot a new line before the next question.
+
+T Yes you did
+T What a shame

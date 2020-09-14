@@ -2,7 +2,8 @@ from datetime import datetime
 from sys import exit
 from os.path import isdir, isfile, splitext
 
-from InputGUI import *
+from GUI import inFileNotSelected, invalidInFile, invalidOutDir, \
+    invalidTime, outDirNotSelected, timeNotSelected, webexPollBuilderGUI
 
 
 def genTimeList():

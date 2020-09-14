@@ -1,3 +1,7 @@
+from GUI import invalidAnswerFormat, noBlankLineAfterQuestion, \
+    noCorrectAnswer, noQuestion
+
+
 def formatString(s):
     s = s.replace("&", "&amp;")
     s = s.replace("<", "&lt;")
@@ -19,8 +23,8 @@ def formatAnswers(l):
             elif a[0].upper() == 'F':
                 correct = "false"
             else:
-                raise ValueError("Invalid input" +
-                                 "expected 'T' or 'F', got", a[0])
+                invalidAnswerFormat(a[0])
+                return None, None, None
 
             answers.append('<ANSWER ISCORRECT="{0}">'.format(correct) +
                            '{0}</ANSWER>\n'.format(formatString(a[1])))
@@ -32,28 +36,27 @@ def formatAnswers(l):
         qType = "mcone"
     elif trueCount > 1:
         qType = "mcmany"
-    elif trueCount == 0:
-        correctAns = "There must be at least one correct answer."
-        raise ValueError(correctAns)
     else:
-        # Redundancy; shouldn't be executed
-        raise ValueError("Invalid number of correct answers;" +
-                         " check that there is at least one.")
+        noCorrectAnswer()
+        return None, None, None
 
     return answers, qType, len(answers) + 3
 
 
 def processQuestion(l, t):
-    if not l[0]:
-        raise ValueError("Expected title in file.")
+    if l[0] == "\n":
+        noQuestion()
+        return None, None
     else:
         if len(l) == 1 or l[2][0:2].upper() not in ["T ", "F "]:
             a, qType, i = [], "text", 2
         else:
             if l[1] != "\n":
-                raise ValueError("Expected blank line;" +
-                                 " check the input file format.")
+                noBlankLineAfterQuestion(l[1].strip())
+                return None, None
             a, qType, i = formatAnswers(l[2:])
+            if a is None:
+                return None, None
 
     return ['<?xml version="1.0" encoding="UTF-16"?>\n',
             '<POLL TYPE="named" SHOWTIMER="yes" ALARM="{0}"'.format(t) +

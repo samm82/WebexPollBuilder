@@ -10,6 +10,8 @@ def buildPolls(lines, t, d, f):
     fileCount = 0
     while lines:
         output, start = processQuestion(lines, t)
+        if output is None:
+            return fileCount
         saveToFile(p, output)
         lines = lines[start:]
         fileCount += 1
