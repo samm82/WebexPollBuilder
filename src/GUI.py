@@ -48,6 +48,12 @@ def invalidOutDir(d):
              title="Invalid Output Directory")
 
 
+def invalidOutFilename(f):
+    sg.popup("Invalid Output Filename: {0}".format(f),
+             "Please enter a valid file name (or leave the field blank).",
+             title="Invalid Output Filename")
+
+
 def noCorrectAnswer():
     sg.popup("There must be at least one correct answer.",
              title="No Correct Answer(s)")

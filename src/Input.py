@@ -1,9 +1,11 @@
 from datetime import datetime
 from sys import exit
 from os.path import isdir, isfile, splitext
+from pathvalidate import is_valid_filename
 
 from GUI import inFileNotSelected, invalidInFile, invalidOutDir, \
-    invalidTime, outDirNotSelected, timeNotSelected, webexPollBuilderGUI
+    invalidOutFilename, invalidTime, outDirNotSelected, timeNotSelected, \
+    webexPollBuilderGUI
 
 
 def genTimeList():
@@ -14,6 +16,15 @@ def genTimeList():
         t = t + list(map(lambda x: ":".join([str(i), x]), mins))
     t.append(str(TIME_MAX) + ":00")
     return t
+
+
+def validFileName(name):
+    if name in ('CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4',
+                'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2',
+                'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9'):
+        return False
+
+    return is_valid_filename(name)
 
 
 def gui():
@@ -34,10 +45,14 @@ def gui():
             elif not isdir(values[2]):
                 invalidOutDir(values[2])
             else:
-                if not values[3]:
-                    values[3] = datetime.now().strftime("%m%d%Y")
+                fileName = values[3]
+                if not fileName:
+                    fileName = datetime.now().strftime("%m%d%Y")
+                elif not validFileName(fileName):
+                    invalidOutFilename(fileName)
+                    continue
                 # can't use tuple unpacking or the like; type(values) == dict
-                return values[0], values[1], values[2], values[3]
+                return values[0], values[1], values[2], fileName
         else:
             exit()
 
